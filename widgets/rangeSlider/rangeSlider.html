@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            appearance: none;
+            height: 15px;
+            width: 100%;
+            transition: opacity .2s;
+            background: #ddd;
+            border-radius: none;
+            outline: none;
+            opacity: .8;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 10px;
+            height: 25px;
+            background: #aaa;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            appearance: none;
+            width: 10px;
+            height: 25px;
+            background: #aaa;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider">
+        <div>Value: <span class="rangeVal"></span></div>
+    </div>
+
+    <script>
+        let slidecontainer = document.querySelector('.slidecontainer');
+        let valField = slidecontainer.querySelector('.rangeVal');
+        let slider = slidecontainer.querySelector('.slider');
+        valField.innerText = slider.value
+
+        slider.addEventListener('input', () => valField.innerText = slider.value);
+    </script>
+</body>
+
+</html>

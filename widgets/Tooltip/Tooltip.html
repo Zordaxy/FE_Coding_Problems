@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .tooltip {
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+        }
+
+        .tooltip .tooltip-text {
+            display: none;
+            background: #ddd;
+            border-radius: 0.2rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 125%;
+            top: auto;
+            padding: 5px 10px;
+        }
+
+        .tooltip:hover .tooltip-text {
+            display: block;
+        }
+
+        .tooltip-text.down {
+            bottom: auto;
+            top: 125%;
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #ddd transparent transparent transparent;
+            top: 100%;
+            bottom: auto;
+            left: 50%;
+        }
+
+        .tooltip-text.down::after {
+            top: auto;
+            bottom: 100%;
+            border-color: transparent transparent #ddd transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="tooltip" data-tooltip="this is detailed tooltip">
+        Hover me!
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <script>
+        let ttFields = document.querySelectorAll(".tooltip");
+        for (let field of ttFields) {
+            let tooltip = document.createElement("div");
+            tooltip.textContent = field.dataset.tooltip;
+            tooltip.classList.add("tooltip-text");
+            field.appendChild(tooltip);
+            field.addEventListener("mouseenter", event => {
+                let rect = field.getBoundingClientRect();
+                let shift = rect.height * 1.25;
+                if (rect.top < shift) tooltip.classList.add("down")
+                if (rect.bottom + shift > window.innerHeight) tooltip.classList.remove("down")
+            });
+        }
+    </script>
+</body>
+
+</html>

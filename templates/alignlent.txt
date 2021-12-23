@@ -1,0 +1,17 @@
+Element alignment.
+
+Horizontally:
+- inline-block + text:align: center
+- margin: 0 auto + width for child
+
+Verticaly:
+- inline-block + line-height = height
+- position: absolute + top: 50% + transform: translateY(-50%)
+
+Both:
+- position: absolute +
+			top: 50% + 
+			left: 50% + 
+			transform: translate(-50%, -50%)
+			
+Or: flexbox (grid)

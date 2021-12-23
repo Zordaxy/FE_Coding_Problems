@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <script>
+        class VirtualList {
+            constructor(prop) {
+                if (!prop) throw new Error("invalid inputs");
+                this.numItems = prop.numItems;
+                this.itemHeight = prop.itemHeight;
+                this.innerHeight = this.numItems * this.itemHeight;
+                this.range = { first: 0, last: 0 };
+
+                this.genContainer();
+                this.render();
+            }
+
+            render() {
+                let children = this.getChildren();
+                let end = this.start + children.length - 1;
+
+                for (let child of this.content.children) {
+                    if (+child.dataset.ind < this.start || +child.dataset.ind > end) child.remove();
+                }
+                for (let child of children) {
+                    let ind = +child.dataset.ind;
+                    if (ind > this.range.last || ind < this.range.first) this.content.appendChild(child);
+                }
+                this.range.first = this.start;
+                this.range.last = end;
+            }
+
+            getChildren() {
+                this.start = Math.floor(this.container.scrollTop / this.itemHeight);
+                let visibleCount = Math.ceil(window.innerHeight / this.itemHeight) + 1;
+                visibleCount = Math.min(this.numItems - this.start + 1, visibleCount);
+                const offsetY = this.start * this.itemHeight;
+
+                const visibleNodes = new Array(visibleCount)
+                    .fill(null)
+                    .map((_, index) => this.renderItem(index + this.start));
+                return visibleNodes;
+            }
+
+            genContainer() {
+                let container = document.createElement('div');
+                container.style.height = `${window.innerHeight}px`;
+                container.style.overflow = "auto";
+                container.style.position = "relative";
+
+                this.content = document.createElement('div');
+                this.content.style.height = `${this.innerHeight}px`;
+                this.content.style.overflow = "hidden";
+
+                container.addEventListener('scroll', this.render.bind(this));
+                //document.addEventListener('scroll', this.render.bind(this));
+                container.appendChild(this.content);
+                this.container = container;
+                document.body.appendChild(container);
+            }
+
+            renderItem(ind) {
+                let row = document.createElement("div");
+                row.textContent = `Item ${ind}`;
+                row.style.height = `${this.itemHeight}px`;
+                row.style.position = 'absolute';
+                row.style.top = `${ind * this.itemHeight}px`;
+                row.dataset.ind = ind;
+                return row;
+            }
+        }
+
+        new VirtualList({ numItems: 1000000, itemHeight: 20 });
+    </script>
+</body>
+
+</html>

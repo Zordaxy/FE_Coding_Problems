@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        table {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+            text-align: left;
+            width: 95%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        tr:nth-child(2n) {
+            background: #eee;
+        }
+
+        th {
+            cursor: pointer;
+        }
+        
+        .desc .active:after {
+            content: '\2191';
+        }
+
+        .asc .active:after {
+            content: '\2193';
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        let table = [
+            { city: "Berlin", country: "Germany" },
+            { city: "Paris", country: "France" },
+            { city: "London", country: "Great Britain" },
+            { city: "Tokyo", country: "Japan" },
+        ]
+
+        let headers = ['city', 'country'];
+
+        let tableEl;
+        let curSorting;
+        let isAscending = true;
+        function generate() {
+
+            // let html = `
+  	        //     <tr>
+  		    //         <th onclick="sort('city')" ${curSorting === city ? "class='active'" : ""}>city</th>
+  		    //         <th onclick="sort('country') ${curSorting === country ? "class='active'" : ""}">country</th>
+		    //         </tr>
+            //     `
+            let html = "";
+            let headRow = document.createElement('tr');
+            headRow.classList.add(isAscending ? 'asc' : 'desc');
+            
+            
+            for (let name of headers) {
+                let header = document.createElement('th');
+                if (name === curSorting) {
+                    header.classList.add('active');
+                } else {
+                    header.classList.remove('active');
+                }
+                header.textContent = name;
+                header.addEventListener("click", () => sort(name), false);
+                headRow.appendChild(header);
+            }
+            
+            tableEl = document.createElement('table');
+            tableEl.appendChild(headRow);
+
+
+            table.forEach(row => {
+                let rowEl = document.createElement('tr');
+                for (let name of headers) {
+                    let cell = document.createElement('td');
+                    cell.classList.add('name');
+                    cell.textContent = row[name];
+                    rowEl.appendChild(cell);
+                }
+                tableEl.appendChild(rowEl);
+
+                // return `
+    	        //     <tr>
+  			    //         <td class="city">${row.city}</td>
+  			    //         <td class="country">${row.country}</td>
+			    //         </tr>
+                //     `
+            });
+
+            
+
+            // tableEl.innerHTML += html;
+            document.body.appendChild(tableEl);
+        }
+
+        function sort(prop) {
+            if (tableEl) tableEl.remove();
+
+            isAscending = curSorting === prop ? !isAscending : true;
+            curSorting = prop;
+
+            table = table.sort((a, b) => isAscending === a[prop] > b[prop] ? 1 : -1);
+            generate();
+        }
+
+        generate();
+    </script>
+</body>
+
+</html>

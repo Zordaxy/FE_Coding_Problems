@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .star {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .star::after {
+            content: "★";
+        }
+
+        .star.checked {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rating" onclick="onVote(event)">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+
+    <script>
+        function onVote(event) {
+            let stars = [...document.querySelector('.rating').children];
+            let rating = stars.indexOf(event.target) + 1;
+
+            for (let i = 0; i < stars.length; i++) {
+                if (i < rating) {
+                    stars[i].classList.add('checked');
+                } else {
+                    stars[i].classList.remove('checked');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

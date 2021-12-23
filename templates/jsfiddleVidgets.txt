@@ -1,0 +1,12 @@
+Accordion:
+https://jsfiddle.net/zordaxy/x12Lf7ky/32/
+Tabs:
+https://jsfiddle.net/zordaxy/dgwp9n4y/28/
+Card:
+https://jsfiddle.net/zordaxy/h7t68ckv/8/
+Star rating:
+https://jsfiddle.net/zordaxy/6jug27p1/17/
+Carousel:
+https://jsfiddle.net/zordaxy/dy6npek9/42/
+Sortable table:
+https://jsfiddle.net/zordaxy/1dkbqv8z/36/

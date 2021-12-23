@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .tab {
+            background: #eee;
+            width: 100%;
+            display: flex;
+        }
+
+        .tab button {
+            border: none;
+            padding: 15px;
+            margin: 0;
+            float: left;
+            background: none;
+            outline: none;
+        }
+
+        .tab button.active {
+            background: #ccc;
+        }
+
+        .tab button:hover {
+            background: #ddd;
+        }
+
+        .content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="tab" onclick="selectTab(event)">
+        <button class="links" data-city='London'>London</button>
+        <button class="links" data-city='Tokyo'>Tokyo</button>
+        <button class="links" data-city='Berlin'>Berlin</button>
+    </nav>
+    <main>
+        <div id="London" class="content">
+            <h3>London</h3>
+            <p>London is the capital of Great Britain</p>
+        </div>
+        <div id="Tokyo" class="content">
+            <h3>Tokyo</h3>
+            <p>Tokyo is the capital of Japan</p>
+        </div>
+        <div id="Berlin" class="content">
+            <h3>Berlin</h3>
+            <p>Berlin is the capital of Germany</p>
+        </div>
+    </main>
+
+
+    <script>
+        function selectTab(e) {
+            let links = document.querySelectorAll(".links");
+            for (let link of links) link.classList.remove("active");
+            let contents = document.querySelectorAll(".content");
+            for (let content of contents) content.style.display = 'none';
+
+
+            e.target.classList.toggle("active");
+            let el = document.querySelector(`#${e.target.dataset.city}`);
+            el.style.display = "block";
+        }
+    </script>
+</body>
+
+</html>
